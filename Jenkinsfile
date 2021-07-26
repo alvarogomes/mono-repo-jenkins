@@ -74,7 +74,9 @@ def findJenkinsfileToRun(paths) {
     for (path in paths) {
         def f = createFilePath("${pwd()}/${path}")
         def j = findMostSpecificJenkinsFile(f)
-        foundJenkinsFiles = foundJenkinsFiles << j
+        if (j != null || j != "") {
+            foundJenkinsFiles = foundJenkinsFiles << j
+        }
     }
 
     println("Selecting from:\n${foundJenkinsFiles}")
