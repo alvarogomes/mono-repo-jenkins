@@ -2,7 +2,9 @@ pipeline {
     agent any
     stages {
         stage('build project2 microservice') {
-            echo 'Executing project2 microservice pipeline commands...' 
+            steps {
+                echo 'Executing project2 microservice pipeline commands...' 
+            }
         }
     }
 }
