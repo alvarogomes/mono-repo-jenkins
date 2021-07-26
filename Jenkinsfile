@@ -5,17 +5,18 @@ node {
 
     try {
         stage('Determine Jenkinsfile to build') {
-            def sout = sh(returnStdout: true, script: 'git diff --name-only origin/main...HEAD')
+            if (env.BRANCH_NAME == "main") {
+                def sout = sh(returnStdout: true, script: 'git diff --name-only origin/main...HEAD')
 
-            def j = findJenkinsfileToRun(sout.split())
+                def j = findJenkinsfileToRun(sout.split())
 
-            if (j.toString() == "${pwd()}/Jenkinsfile") {
-                println("Building the whole world... (But here I not put nothing =] )")
-            } else {
-                println("Building ${j.toString()}")
-                load "${j.toString()}"
+                if (j.toString() == "${pwd()}/Jenkinsfile") {
+                    println("Building the whole world... (But here I not put nothing =] )")
+                } else {
+                    println("Building ${j.toString()}")
+                    load "${j.toString()}"
+                }
             }
-
         }
         currentBuild.result = 'SUCCESS'
     } catch (err) {
