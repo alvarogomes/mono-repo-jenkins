@@ -69,15 +69,15 @@ def findJenkinsfileToRun(paths) {
 
     def foundJenkinsFiles = []
 
-    println("Finding most specific Jenkinsfile for changed files:\n${paths.join('\n')}")
+    println("Finding most specific Jenkinsfile for changed files:\n${paths.join()}")
 
     for (path in paths) {
-        def f = createFilePath("${pwd()}/${path}")
+        def f = createFilePath("${path}")
         def j = findMostSpecificJenkinsFile(f)
         foundJenkinsFiles = foundJenkinsFiles << j
     }
 
-    println("Selecting from:\n${foundJenkinsFiles.join('\n')}")
+    println("Selecting from:\n${foundJenkinsFiles.join()}")
 
     foundJenkinsFiles.unique()
 
