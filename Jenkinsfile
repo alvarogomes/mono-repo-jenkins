@@ -72,7 +72,7 @@ def findJenkinsfileToRun(paths) {
     println("Finding most specific Jenkinsfile for changed files:\n${paths}")
 
     for (path in paths) {
-        def f = createFilePath("${path}")
+        def f = createFilePath("${pwd()}/${path}")
         def j = findMostSpecificJenkinsFile(f)
         foundJenkinsFiles = foundJenkinsFiles << j
     }
