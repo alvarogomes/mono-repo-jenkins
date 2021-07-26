@@ -8,7 +8,7 @@ node {
             
             // def sout = sh(returnStdout: true, script: 'git diff --name-only origin/main...HEAD')
             def sout = getChangedFilesList()
-            def j = findJenkinsfileToRun(sout.split())
+            def j = findJenkinsfileToRun(sout)
 
             if (j.toString() == "${pwd()}/Jenkinsfile") {
                 println("Building the whole world... (But here I not put nothing =] )")
