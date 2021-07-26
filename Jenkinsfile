@@ -5,7 +5,7 @@ node {
 
     try {
         stage('Determine Jenkinsfile to build') {
-            if (env.BRANCH_NAME == "main") {
+            if (env.CHANGE_TARGET == "main") {
                 def sout = sh(returnStdout: true, script: 'git diff --name-only origin/main...HEAD')
 
                 def j = findJenkinsfileToRun(sout.split())
