@@ -5,7 +5,7 @@ node {
 
     try {
         stage('Determine Jenkinsfile to build') {
-            def sout = sh(returnStdout: true, script: 'git diff --name-only origin/master...HEAD')
+            def sout = sh(returnStdout: true, script: 'git diff --name-only origin/main...HEAD')
 
             def j = findJenkinsfileToRun(sout.split())
 
