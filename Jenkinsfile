@@ -6,8 +6,8 @@ node {
     try {
         stage('Determine Jenkinsfile to build') {
             
-            def sout = sh(returnStdout: true, script: 'git diff --name-only origin/main...HEAD')
-
+            // def sout = sh(returnStdout: true, script: 'git diff --name-only origin/main...HEAD')
+            def sout = getChangedFilesList()
             def j = findJenkinsfileToRun(sout.split())
 
             if (j.toString() == "${pwd()}/Jenkinsfile") {
@@ -25,6 +25,18 @@ node {
     }
 }
 
+@NonCPS
+def String getChangedFilesList() {
+    changedFiles = []
+    for (changeLogSet in currentBuild.changeSets) { 
+        for (entry in changeLogSet.getItems()) { // for each commit in the detected changes
+            for (file in entry.getAffectedFiles()) {
+                changedFiles.add(file.getPath()) // add changed file to list
+            }
+        }
+    }
+    return changedFiles
+}
 
 @NonCPS
 def createFilePath(def path) {
