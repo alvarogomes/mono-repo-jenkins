@@ -32,7 +32,7 @@ def String getChangedFilesList() {
         for (entry in changeLogSet.getItems()) { // for each commit in the detected changes
             for (file in entry.getAffectedFiles()) {
                 println("Arquivo: ${file.getPath()}")
-                changedFiles.add(file.getPath()) // add changed file to list
+                changedFiles.add(file.getPath().toString()) // add changed file to list
             }
         }
     }
