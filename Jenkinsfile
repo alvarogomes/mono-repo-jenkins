@@ -32,7 +32,7 @@ def String getChangedFilesList() {
         for (entry in changeLogSet.getItems()) { // for each commit in the detected changes
             for (file in entry.getAffectedFiles()) {
                 println("Arquivo: ${file.getPath()}")
-                changedFiles = changedFiles << file.getPath() // add changed file to list
+                changedFiles = changedFiles << file.getPath() + "\n" // add changed file to list
             }
         }
     }
@@ -51,18 +51,13 @@ def createFilePath(def path) {
 
 @NonCPS
 def findMostSpecificJenkinsFile(filePath) {
-    println("Procurando Jenkinsfile em ${filePath}" )
     if (filePath == null) {
         return null;
     }
-
     if (filePath.name == "Jenkinsfile" && ! filePath.isDirectory()) {
         return filePath;
     }
-
     def potentialJenkinsFile=createFilePath("${filePath.getParent().toString()}/Jenkinsfile")
-    println("Tentando no diretorio acima ${filePath.getParent().toString()}")
-
     if (potentialJenkinsFile.exists()) {
         return potentialJenkinsFile
     }
