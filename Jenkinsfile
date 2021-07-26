@@ -73,9 +73,11 @@ def findJenkinsfileToRun(paths) {
 
     for (path in paths) {
         def f = createFilePath("${pwd()}/${path}")
-        def j = findMostSpecificJenkinsFile(f)
-        if (j != null || j != "") {
-            foundJenkinsFiles = foundJenkinsFiles << j
+        if (f != null) {
+            def j = findMostSpecificJenkinsFile(f)
+            if (j != null || j != "") {
+                foundJenkinsFiles = foundJenkinsFiles << j
+            }
         }
     }
 
