@@ -8,7 +8,7 @@ node {
             
             // def sout = sh(returnStdout: true, script: 'git diff --name-only origin/main...HEAD')
             def sout = getChangedFilesList()
-            def j = findJenkinsfileToRun(sout)
+            def j = findJenkinsfileToRun(sout.split())
 
             if (j.toString() == "${pwd()}/Jenkinsfile") {
                 println("Building the whole world... (But here I not put nothing =] )")
@@ -27,12 +27,12 @@ node {
 
 @NonCPS
 def String getChangedFilesList() {
-    changedFiles = []
+    changedFiles = ""
     for (changeLogSet in currentBuild.changeSets) { 
         for (entry in changeLogSet.getItems()) { // for each commit in the detected changes
             for (file in entry.getAffectedFiles()) {
                 println("Arquivo: ${file.getPath()}")
-                changedFiles.add("${file.getPath()}") // add changed file to list
+                changedFiles = changedFiles << file.getPath() // add changed file to list
             }
         }
     }
@@ -75,7 +75,7 @@ def findJenkinsfileToRun(paths) {
 
     def foundJenkinsFiles = []
 
-    println("Finding most specific Jenkinsfile for changed files:\n${paths}")
+    println("Finding most specific Jenkinsfile for changed files:\n${paths.join('\n')}")
 
     for (path in paths) {
         def f = createFilePath("${pwd()}/${path}")
@@ -87,7 +87,7 @@ def findJenkinsfileToRun(paths) {
         }
     }
 
-    println("Selecting from:\n${foundJenkinsFiles}")
+    println("Selecting from:\n${foundJenkinsFiles.join('\n')}")
 
     foundJenkinsFiles.unique()
 
