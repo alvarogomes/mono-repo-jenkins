@@ -51,6 +51,10 @@ def createFilePath(def path) {
 
 @NonCPS
 def findMostSpecificJenkinsFile(filePath) {
+    if (filePath == null) {
+        return null;
+    }
+
     if (filePath.name == "Jenkinsfile" && ! filePath.isDirectory()) {
         return filePath;
     }
