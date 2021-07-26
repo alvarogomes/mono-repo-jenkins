@@ -51,6 +51,7 @@ def createFilePath(def path) {
 
 @NonCPS
 def findMostSpecificJenkinsFile(filePath) {
+    println("Procurando Jenkinsfile em ${filePath}" )
     if (filePath == null) {
         return null;
     }
@@ -60,6 +61,7 @@ def findMostSpecificJenkinsFile(filePath) {
     }
 
     def potentialJenkinsFile=createFilePath("${filePath.getParent().toString()}/Jenkinsfile")
+    println("Tentando no diretorio acima ${filePath.getParent().toString()}")
 
     if (potentialJenkinsFile.exists()) {
         return potentialJenkinsFile
