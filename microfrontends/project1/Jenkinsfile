@@ -1,0 +1,8 @@
+pipeline {
+    agent any
+    stages {
+        stage('build project1 microfrontend') {
+            echo 'Executing project1 microfrontend pipeline commands...' 
+        }
+    }
+}
